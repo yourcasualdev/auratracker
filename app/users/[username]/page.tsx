@@ -27,7 +27,7 @@ const User = async ({ params }: { params: { username: string } }) => {
         <div className="flex flex-row gap-6 h-full justify-start w-full">
           <Avatar className="w-40 h-40">
             <Image
-              src={image?.signedUrl}
+              src={image?.signedUrl!}
               alt={
                 "Profile image of " + user?.first_name + " " + user?.last_name
               }
