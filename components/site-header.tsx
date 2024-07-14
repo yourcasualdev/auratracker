@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
+import AuthButton from "./AuthButton";
 
 export function SiteHeader() {
   return (
@@ -9,7 +10,9 @@ export function SiteHeader() {
         AURA TRACKER
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none"></div>
-          <nav className="flex items-center"></nav>
+          <nav className="flex items-center">
+            <AuthButton />
+          </nav>
         </div>
       </div>
     </header>

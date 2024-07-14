@@ -50,18 +50,21 @@ export type Database = {
           first_name: string | null
           id: string
           last_name: string | null
+          username: string | null
         }
         Insert: {
           amount_of_aura?: number | null
           first_name?: string | null
           id: string
           last_name?: string | null
+          username?: string | null
         }
         Update: {
           amount_of_aura?: number | null
           first_name?: string | null
           id?: string
           last_name?: string | null
+          username?: string | null
         }
         Relationships: [
           {
