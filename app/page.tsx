@@ -1,9 +1,8 @@
-import AuthButton from "../components/AuthButton";
+import { createClient } from "@/utils/supabase/server";
 
-export default async function Index() {
-  return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      <AuthButton />
-    </div>
-  );
+export default async function Notes() {
+  const supabase = createClient();
+  const { data: notes } = await supabase.from("profiles").select();
+
+  return <pre>{JSON.stringify(notes, null, 2)}</pre>;
 }

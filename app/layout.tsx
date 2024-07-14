@@ -3,6 +3,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import "./globals.css";
+import { cn } from "@/lib/utils";
+import { SiteHeader } from "@/components/site-header";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -20,9 +22,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={GeistSans.className}>
-      <body className="bg-background text-foreground">
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          GeistSans.variable
+        )}
+      >
         <main className="min-h-screen flex flex-col items-center">
+          <SiteHeader />
           {children}
         </main>
         <Analytics />
