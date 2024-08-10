@@ -49,7 +49,14 @@ export function CreatePost() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    const user = await supabase.auth.getUser();
+
+    if (!user.data.user) {
+      toast.error("You need to be logged in to create an event!");
+      return;
+    }
     const { error } = await supabase.from("aura_events").insert({
+      user_id: user.data.user?.id,
       title: values.title,
       description: values.description,
       amount: values.amount,
