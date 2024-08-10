@@ -1,4 +1,6 @@
+import AuraBadge from "@/components/aura-badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Typography from "@/components/ui/Typography";
 import { createClient } from "@/utils/supabase/server";
@@ -20,6 +22,11 @@ const User = async ({ params }: { params: { username: string } }) => {
   const { data: image } = await supabase.storage
     .from("profile_images")
     .createSignedUrl(`/public/profile-image-${user?.id}.jpg`, 60);
+
+  const { data: events } = await supabase
+    .from("aura_events")
+    .select()
+    .eq("user_id", user?.id!);
 
   return (
     <div className="container">
@@ -62,6 +69,25 @@ const User = async ({ params }: { params: { username: string } }) => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="flex flex-col gap-4 px-8 w-[80rem] m-auto mt-20">
+        {events?.map((event) => (
+          <div
+            key={event.id}
+            className="border shadow-sm rounded-md p-4 relative"
+          >
+            <Typography variant="Bold" size="text-xl">
+              {event.title}
+            </Typography>
+            <Typography variant="Regular" size="text-sm" color="secondary">
+              {event.description}
+            </Typography>
+            <AuraBadge
+              aura={event.amount!}
+              className="absolute right-4 top-4"
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
