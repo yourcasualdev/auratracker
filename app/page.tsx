@@ -4,5 +4,5 @@ export default async function Notes() {
   const supabase = createClient();
   const { data: notes } = await supabase.from("profiles").select();
 
-  return <pre>{JSON.stringify(notes, null, 2)}</pre>;
+  return <pre>selam</pre>;
 }

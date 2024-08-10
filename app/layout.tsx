@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { SiteHeader } from "@/components/site-header";
+import { CreatePost } from "@/components/create-post";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -33,6 +34,7 @@ export default function RootLayout({
         <main className="min-h-screen flex flex-col items-center">
           <SiteHeader />
           {children}
+          <CreatePost />
         </main>
         <Analytics />
         <SpeedInsights />
