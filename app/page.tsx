@@ -4,5 +4,10 @@ export default async function Notes() {
   const supabase = createClient();
   const { data: notes } = await supabase.from("profiles").select();
 
-  return <pre>selam</pre>;
+  return (
+    <div>
+      selam
+      <div></div>
+    </div>
+  );
 }

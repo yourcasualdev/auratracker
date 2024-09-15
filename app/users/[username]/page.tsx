@@ -8,14 +8,21 @@ import Typography from "@/components/ui/Typography";
 import { createClient } from "@/utils/supabase/server";
 import Image from "next/image";
 import React from "react";
+import { toast } from "sonner";
+import FollowButton from "./follow-button";
 
 const User = async ({ params }: { params: { username: string } }) => {
   const { username } = params;
 
   const supabase = createClient();
 
+  // get us
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   // get user by id
-  const { data: user } = await supabase
+  const { data: profile } = await supabase
     .from("profiles")
     .select()
     .eq("username", username)
@@ -23,12 +30,12 @@ const User = async ({ params }: { params: { username: string } }) => {
 
   const { data: image } = await supabase.storage
     .from("profile_images")
-    .createSignedUrl(`/public/profile-image-${user?.id}.jpg`, 60);
+    .createSignedUrl(`/public/profile-image-${profile?.id}.jpg`, 60);
 
   const { data: events } = await supabase
     .from("aura_events")
     .select()
-    .eq("user_id", user?.id!)
+    .eq("user_id", profile?.id!)
     .order("created_at", { ascending: false });
 
   return (
@@ -40,34 +47,35 @@ const User = async ({ params }: { params: { username: string } }) => {
             <Image
               src={image?.signedUrl!}
               alt={
-                "Profile image of " + user?.first_name + " " + user?.last_name
+                "Profile image of " +
+                profile?.first_name +
+                " " +
+                profile?.last_name
               }
               width={96}
               height={96}
             />
             <AvatarFallback className="h-24 w-24">
-              {user?.first_name?.[0]?.toUpperCase()! +
-                user?.last_name?.[0]?.toUpperCase()!}
+              {profile?.first_name?.[0]?.toUpperCase()! +
+                profile?.last_name?.[0]?.toUpperCase()!}
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-5 w-full">
             <div className="flex flex-row gap-4 justify-between">
               <div>
                 <Typography variant="Bold" size="display-sm">
-                  {user?.first_name} {user?.last_name}
+                  {profile?.first_name} {profile?.last_name}
                 </Typography>
                 <Typography
                   variant="Bold"
                   size="text-sm"
                   className="text-muted-foreground"
                 >
-                  @{user?.username}
+                  @{profile?.username}
                 </Typography>
               </div>
               <div>
-                <Button size="sm" variant="default">
-                  Follow
-                </Button>
+                <FollowButton userId={user?.id!} friendId={profile?.id!} />
               </div>
             </div>
           </div>
