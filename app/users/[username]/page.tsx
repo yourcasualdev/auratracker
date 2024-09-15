@@ -75,7 +75,9 @@ const User = async ({ params }: { params: { username: string } }) => {
                 </Typography>
               </div>
               <div>
-                <FollowButton userId={user?.id!} friendId={profile?.id!} />
+                {user?.id !== profile?.id && (
+                  <FollowButton userId={user?.id!} friendId={profile?.id!} />
+                )}
               </div>
             </div>
           </div>
