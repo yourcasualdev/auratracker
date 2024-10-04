@@ -74,7 +74,7 @@ export function CreatePost() {
 
   return (
     <Dialog>
-      <DialogTrigger ref={ref} asChild className="fixed bottom-5 right-5">
+      <DialogTrigger ref={ref} asChild className="fixed bottom-16 right-5">
         <Button variant="default" className="rounded-full h-16 w-16 text-3xl">
           +
         </Button>
