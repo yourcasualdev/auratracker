@@ -15,6 +15,7 @@ export type Database = {
           created_at: string
           description: string | null
           id: number
+          source_friend_id: string | null
           title: string | null
           user_id: string | null
         }
@@ -23,6 +24,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: number
+          source_friend_id?: string | null
           title?: string | null
           user_id?: string | null
         }
@@ -31,10 +33,18 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: number
+          source_friend_id?: string | null
           title?: string | null
           user_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "aura_events_source_friend_id_fkey"
+            columns: ["source_friend_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "aura_events_user_id_fkey"
             columns: ["user_id"]
